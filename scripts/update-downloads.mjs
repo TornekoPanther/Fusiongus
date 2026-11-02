@@ -1,6 +1,5 @@
 import { writeFile } from 'node:fs/promises';
 
-
 const repository = process.env.GITHUB_REPOSITORY || 'TornekoPanther/Fusiongus';
 if (repository.toLowerCase() !== 'tornekopanther/fusiongus') throw new Error('Le dépôt attendu est TornekoPanther/Fusiongus.');
 const headers = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
@@ -23,4 +22,3 @@ for (let page = 1; page <= 5; page++) {
 }
 await writeFile(new URL('../website/downloads.json', import.meta.url), JSON.stringify({ repository, generatedAt: new Date().toISOString(), releases }, null, 2) + '\n');
 console.log(`${releases.length} version(s) stable(s) indexée(s).`);
-
