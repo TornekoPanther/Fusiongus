@@ -1,0 +1,50 @@
+name: Publier le site Fusiongus
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'website/**'
+      - 'scripts/**'
+      - '.github/workflows/pages.yml'
+  release:
+    types: [published, edited, deleted, released, unpublished]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Récupérer le site
+        uses: actions/checkout@v6
+        with:
+          ref: main
+      - name: Vérifier les téléchargements
+        run: node --test scripts/release-utils.test.mjs
+      - name: Indexer les versions publiées
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/update-downloads.mjs
+      - name: Configurer GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Préparer la publication
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: website
+      - name: Publier
+        id: deployment
+        uses: actions/deploy-pages@v4
