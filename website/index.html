@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101713">
+  <meta name="description" content="Fusiongus, un projet de Tornie. Retrouvez les téléchargements Windows, les prochaines versions et les instructions d’installation.">
+  <title>Fusiongus — Le jeu de Tornie</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="header wrap">
+    <a class="brand" href="#" aria-label="Fusiongus, accueil"><img src="./icon.svg" width="34" height="34" alt=""><span>FUSIONGUS<span class="brand-dot">.</span></span></a>
+    <nav aria-label="Navigation principale">
+      <a href="#telecharger">Télécharger</a>
+      <a href="#installation">Installation</a>
+      <a class="repo-link" href="https://github.com/TornekoPanther/Fusiongus">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="contenu">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="small-mark" aria-hidden="true">✳</span> UN PROJET DE TORNIE</p>
+        <h1 id="hero-title">Bienvenue dans<br><span>Fusiongus.</span></h1>
+        <p class="intro">Le point de départ de votre prochaine partie.<br>Retrouvez le jeu, ses versions et tout ce qu’il faut pour le lancer.</p>
+        <a class="text-link" href="#telecharger">Choisir ma version <span aria-hidden="true">↓</span></a>
+        <div class="hero-foot"><span class="status-dot" aria-hidden="true"></span><span id="hero-status">Windows en préparation · Linux à venir</span></div>
+      </div>
+
+      <div class="fusion-art" role="img" aria-label="Illustration abstraite de deux formes qui se rejoignent, symbole de Fusiongus">
+        <div class="art-grid" aria-hidden="true"></div>
+        <div class="art-coordinates" aria-hidden="true">F / G<br>01 — 02</div>
+        <svg class="fusion-shape" viewBox="0 0 500 500" aria-hidden="true">
+          <defs><linearGradient id="mint" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d8f6cc"/><stop offset="1" stop-color="#7eb986"/></linearGradient><linearGradient id="amber" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd495"/><stop offset="1" stop-color="#d88b53"/></linearGradient></defs>
+          <path d="M75 110h200v75H155v65h100v75H155v85H75z" fill="url(#mint)" transform="rotate(-12 165 250)"/>
+          <path d="M425 390H225v-75h120v-65H245v-75h100V90h80z" fill="url(#amber)" transform="rotate(-12 335 250)"/>
+          <path d="M231 227h38v46h-38z" fill="#101713"/>
+        </svg>
+        <div class="art-caption"><span>DEUX FORMES.<br>UN NOUVEAU DÉPART.</span><span aria-hidden="true">✳</span></div>
+      </div>
+    </section>
+
+    <section id="telecharger" class="downloads wrap" aria-labelledby="downloads-title">
+      <div class="section-heading"><div><p class="eyebrow">01 / TÉLÉCHARGEMENTS</p><h2 id="downloads-title">À vous de jouer.</h2></div><a class="text-link" href="https://github.com/TornekoPanther/Fusiongus/releases">Toutes les versions <span aria-hidden="true">↗</span></a></div>
+      <div class="platforms">
+        <article class="platform windows">
+          <div class="platform-top"><svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true"><path fill="currentColor" d="M2 5l12-2v12H2zm14-2l14-2v14H16zM2 17h12v12L2 27zm14 0h14v14l-14-2z"/></svg><span class="pill" id="windows-badge">En préparation</span></div>
+          <h3>Windows</h3>
+          <p id="windows-description">Le téléchargement sera disponible dès la publication de la première version Windows.</p>
+          <a id="windows-download" class="download-button" aria-disabled="true" role="link"><span>Télécharger pour Windows</span><span aria-hidden="true">↓</span></a>
+          <p class="asset-info" id="windows-info" role="status" aria-live="polite">Aucune version Windows publiée pour le moment.</p>
+        </article>
+        <article class="platform linux">
+          <div class="platform-top"><span class="linux-symbol" aria-hidden="true">&gt;_</span><span class="pill" id="linux-badge">La prochaine étape</span></div>
+          <h3>Linux</h3>
+          <p id="linux-description">Une version Linux est prévue après la préparation et la vérification de la version Windows.</p>
+          <a id="linux-download" class="download-button secondary" aria-disabled="true" role="link"><span>Version Linux à venir</span><span aria-hidden="true">↗</span></a>
+          <p class="asset-info" id="linux-info" role="status" aria-live="polite">Le lien apparaîtra ici quand une version Linux sera publiée.</p>
+        </article>
+      </div>
+      <p class="release-note" id="release-note">Les versions jouables seront proposées depuis les Releases du projet.</p>
+      <noscript><p>JavaScript est désactivé. Consultez <a href="https://github.com/TornekoPanther/Fusiongus/releases">les Releases de Fusiongus</a> pour trouver les téléchargements disponibles.</p></noscript>
+    </section>
+
+    <section id="installation" class="installation wrap" aria-labelledby="install-title">
+      <div class="section-heading"><div><p class="eyebrow">02 / PREMIERS PAS</p><h2 id="install-title">Du téléchargement à la partie.</h2></div></div>
+      <ol class="steps">
+        <li><span class="step-number">01</span><div><h3>Choisissez Windows</h3><p>Téléchargez le paquet Windows lorsqu’il est disponible. Le lien pointe vers les fichiers du jeu, pas vers l’archive du code source.</p></div></li>
+        <li><span class="step-number">02</span><div><h3>Préparez le dossier</h3><p>Pour une version ZIP, choisissez « Extraire tout » et conservez tous les fichiers ensemble. Pour un installateur, suivez ses étapes.</p></div></li>
+        <li><span class="step-number">03</span><div><h3>Suivez le guide du jeu</h3><p>Ouvrez les instructions fournies dans le téléchargement pour connaître le lanceur et les éventuels prérequis de cette version.</p></div></li>
+      </ol>
+    </section>
+
+    <section id="other-projects" class="wrap" aria-label="Autres projets" hidden></section>
+    <section class="follow wrap"><span class="small-mark" aria-hidden="true">✳</span><div><h2>Le projet continue.</h2><p>Suivez les prochaines versions et leur contenu sur GitHub.</p></div><a class="outline-link" href="https://github.com/TornekoPanther/Fusiongus/releases">Suivre les versions <span aria-hidden="true">↗</span></a></section>
+  </main>
+  <footer class="footer wrap"><a class="brand" href="#">FUSIONGUS<span class="brand-dot">.</span></a><p>Un projet de Tornie.</p><a href="https://github.com/TornekoPanther/Fusiongus">Voir le dépôt GitHub <span aria-hidden="true">↗</span></a></footer>
+</body>
+</html>
