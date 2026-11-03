@@ -8,7 +8,9 @@ on:
       - 'scripts/**'
       - '.github/workflows/pages.yml'
   release:
-    types: [published, edited, deleted, released, unpublished]
+    # released covers stable publication and promotion from a prerelease.
+    # Do not also subscribe to published: a new stable release emits both.
+    types: [released, edited, deleted, unpublished]
   workflow_dispatch:
 
 permissions:
@@ -19,7 +21,46 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  refresh-from-main:
+    if: ${{ github.event_name == 'release' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      contents: read
+      actions: write
+    # Release events run at the tag. Keep this job outside github-pages and
+    # request a new run on main, the only ref allowed by that environment.
+    # Existing tags retain their old workflow; refresh those with a manual
+    # workflow_dispatch on main instead of moving a published tag.
+    steps:
+      - name: Demander la publication depuis main
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          node --input-type=module <<'NODE'
+          const repository = process.env.GITHUB_REPOSITORY;
+          const token = process.env.GITHUB_TOKEN;
+          if (repository?.toLowerCase() !== 'tornekopanther/fusiongus' || !token) {
+            throw new Error('Dépôt ou jeton GitHub absent ou inattendu.');
+          }
+          const response = await fetch(`https://api.github.com/repos/${repository}/actions/workflows/pages.yml/dispatches`, {
+            method: 'POST',
+            headers: {
+              Accept: 'application/vnd.github+json',
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+              'X-GitHub-Api-Version': '2022-11-28'
+            },
+            body: JSON.stringify({ ref: 'main' }),
+            redirect: 'error',
+            signal: AbortSignal.timeout(30000)
+          });
+          if (!response.ok) throw new Error(`Déclenchement refusé (HTTP ${response.status}).`);
+          console.log('Publication demandée sur main.');
+          NODE
+
   publish:
+    if: ${{ github.event_name != 'release' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
