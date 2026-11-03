@@ -1,7 +1,13 @@
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
+import { validPackageDeclaration } from '../website/release-utils.mjs';
 
 const repository = process.env.GITHUB_REPOSITORY || 'TornekoPanther/Fusiongus';
 if (repository.toLowerCase() !== 'tornekopanther/fusiongus') throw new Error('Le dépôt attendu est TornekoPanther/Fusiongus.');
+const registry = JSON.parse(await readFile(new URL('../website/download-packages.json', import.meta.url), 'utf8'));
+if (!Array.isArray(registry.packages) || !registry.packages.every(validPackageDeclaration)) {
+  throw new Error('Le registre contient une déclaration de paquet Windows moteur + mod invalide.');
+}
+const packages = registry.packages;
 const headers = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
 if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
 const releases = [];
@@ -14,11 +20,11 @@ for (let page = 1; page <= 5; page++) {
     tag_name: release.tag_name,
     published_at: release.published_at,
     assets: release.assets.map(asset => ({
-      name: asset.name, size: asset.size, state: asset.state,
+      name: asset.name, size: asset.size, state: asset.state, digest: asset.digest,
       browser_download_url: asset.browser_download_url
     }))
   })));
   if (rows.length < 100) break;
 }
-await writeFile(new URL('../website/downloads.json', import.meta.url), JSON.stringify({ repository, generatedAt: new Date().toISOString(), releases }, null, 2) + '\n');
+await writeFile(new URL('../website/downloads.json', import.meta.url), JSON.stringify({ repository, generatedAt: new Date().toISOString(), releases, packages }, null, 2) + '\n');
 console.log(`${releases.length} version(s) stable(s) indexée(s).`);
