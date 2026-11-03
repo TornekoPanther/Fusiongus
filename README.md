@@ -6,7 +6,7 @@ Site de présentation et de téléchargement du projet Fusiongus.
 
 - Le code du site se trouve dans `website/` et sa publication est gérée par GitHub Actions.
 - Le paquet public Windows contient le moteur, ses dépendances et les règles du mod. Il nécessite des données Fusiongus compatibles à importer séparément.
-- Le candidat public R2 est déclaré dans `website/download-packages.json` avec `qaPassed: false` : le téléchargement reste désactivé pendant la validation.
+- Le paquet public R2 est déclaré et validé dans `website/download-packages.json`. Le téléchargement s’active lorsque sa Release stable et son fichier exact sont publiés.
 - La version Linux viendra après validation de la version Windows.
 - La navigation « Autres projets » est préparée et désactivée jusqu’à vérification des trois sites.
 
