@@ -1,0 +1,13 @@
+{
+  "packages": [
+    {
+      "platform": "windows",
+      "kind": "engine-mod-requires-fusiongus-data",
+      "qaPassed": true,
+      "releaseTag": "windows-engine-mod-2026.11.02-r2",
+      "assetName": "Fusiongus-Windows-x64-moteur-et-mod-donnees-requises-2026-11-02-r2.zip",
+      "size": 25390945,
+      "sha256": "73030fae39c433df30d55a344725ada540800478cd43a6a3790596c00e948bbe"
+    }
+  ]
+}
