@@ -5,7 +5,8 @@ Site de présentation et de téléchargement du projet Fusiongus.
 ## État actuel
 
 - Le code du site se trouve dans `website/` et sa publication est gérée par GitHub Actions.
-- Le paquet Windows prêt à lancer doit encore être ajouté aux Releases après vérification.
+- Le paquet public Windows contient le moteur, ses dépendances et les règles du mod. Il nécessite des données Fusiongus compatibles à importer séparément.
+- Le paquet public R2 est déclaré et validé dans `website/download-packages.json`. Le téléchargement s’active lorsque sa Release stable et son fichier exact sont publiés.
 - La version Linux viendra après validation de la version Windows.
 - La navigation « Autres projets » est préparée et désactivée jusqu’à vérification des trois sites.
 
@@ -17,23 +18,33 @@ Site de présentation et de téléchargement du projet Fusiongus.
 
 Les modifications de `website/`, de `scripts/` et du workflow sur `main` déclenchent ensuite une publication automatique. Le site reste consultable sans paquet de jeu, avec des boutons de téléchargement désactivés.
 
-## Ajouter le jeu Windows
+## Paquet Windows : moteur et mod, données requises
 
-Le site ne compile pas le jeu : il distribue les paquets prêts à lancer joints aux Releases.
+Le téléchargement public contient le moteur, ses DLL, les sources GPL et les règles du mod. Il ne contient aucune image, aucun son, aucune vidéo, carte ou campagne, ni profil ou sauvegarde. Le ZIP seul ne permet pas de jouer.
 
-1. Sur le PC qui contient le jeu, préparer un ZIP complet : exécutable, dépendances, données nécessaires et instructions de lancement.
-2. Tester ce ZIP après extraction dans un dossier neuf.
-3. Publier une Release stable dans `TornekoPanther/Fusiongus` et joindre un paquet nommé par exemple `Fusiongus-Windows-x64-v0.1.0.zip`.
-4. Attendre le redéploiement du site. Le bouton Windows devient actif uniquement si un vrai paquet est joint à une Release stable.
+La source de données prise en charge est une extraction privée de `Fusiongus-portable-2026-11-01-campagnes.zip`, avec `PORTABLE-MANIFEST.json` et `prototype/data`. Une installation Wargus standard ne suffit pas. Aucun importeur universel pour d’autres mods n’est fourni.
 
-Ne pas utiliser les liens automatiques « Source code (zip) » comme téléchargement du jeu.
-Si un fichier est ajouté après la publication de la Release, relancer le workflow manuellement.
+1. Extraire le ZIP public dans un dossier neuf.
+2. Lancer `Configurer Fusiongus.cmd` et sélectionner le dossier `Fusiongus` de l’extraction privée compatible. L’équivalent en ligne de commande est `Fusiongus.exe --configure "X:\Mes jeux\Fusiongus"`.
+3. L’import copie et vérifie environ 700 Mo de données vers le propre dossier `work-data` du paquet public, sans reprendre les profils ni sauvegardes de la source.
+4. Utiliser `Verifier les donnees.cmd`, puis `Lancer Fusiongus.cmd` pour démarrer avec un profil neuf.
+
+Pour redistribuer le paquet public, utiliser uniquement le ZIP d’origine. Le dossier configuré contient les données importées et ne doit pas être republié.
+
+## Publier un téléchargement Windows validé
+
+Le site ne compile pas le jeu. Le registre `website/download-packages.json` déclare chaque paquet proposé avec son type, son tag de release exact, son nom de fichier exact, sa taille et son SHA-256. Le type actuellement pris en charge est `engine-mod-requires-fusiongus-data` pour Windows x64. Un fichier simplement nommé « Windows.zip » n’active aucun bouton.
+
+1. Vérifier le ZIP public, son empreinte et son contenu, puis tester le parcours complet dans un dossier neuf : configuration depuis la source compatible, vérification des données, lancement et partie avec profil neuf.
+2. Compléter la déclaration exacte et passer `qaPassed` à `true` seulement une fois cette validation terminée. Les déclarations en attente (`false`) sont acceptées par le registre mais ne produisent aucun téléchargement.
+3. Ajouter le ZIP public et ses fichiers de vérification à une release en brouillon utilisant le tag déclaré, puis publier cette release stable lorsque tous les fichiers sont présents.
+4. Vérifier le workflow et le bouton Windows. Le sélecteur exige une release stable, un fichier entièrement transféré et la correspondance du nom, du tag, de la taille et de l’URL. Il compare aussi le digest GitHub au SHA-256 déclaré lorsque GitHub le fournit. Sans digest GitHub, la déclaration conserve l’empreinte vérifiée avant publication ; le navigateur ne recalcule pas l’empreinte du ZIP.
+
+Les brouillons et préversions restent exclus. Les liens automatiques « Source code (zip) » ne sont pas des paquets Windows. Si un fichier est ajouté après la publication de la release, relancer le workflow manuellement. Ne jamais déclarer le ZIP personnel contenant les données et les sauvegardes comme téléchargement public.
 
 ## Ajouter Linux ensuite
 
-Après compilation et vérification du jeu sous Linux, joindre par exemple `Fusiongus-Linux-x64-v0.1.0.AppImage` ou `Fusiongus-Linux-x64-v0.1.0.tar.gz` à une Release stable. Le bouton Linux se met à jour au prochain déploiement.
-
-Les formats `.deb` et `.rpm` sont également reconnus. Une archive non identifiée comme Windows ou Linux n’est pas proposée automatiquement.
+Linux reste désactivé dans le sélecteur et dans la page. Son activation nécessitera un paquet Linux vérifié, une procédure d’installation adaptée et une extension explicite du registre, du sélecteur et des tests. Ajouter un fichier Linux à une release ne suffit pas à activer le bouton.
 
 ## Navigation commune aux trois sites
 
@@ -43,7 +54,7 @@ La liste des projets se trouve dans `website/other-projects.mjs`. Les sites exis
 - DinoTale Tornie (projet Yoshi) : `https://torneko.github.io/dinotale-tornie/`
 - Fusiongus : `https://tornekopanther.github.io/Fusiongus/`
 
-Une fois Fusiongus publié et fonctionnel, vérifier les trois adresses puis passer `showOtherProjects` à `true` dans `website/config.json`.
+Une fois le parcours Windows validé et les projets prêts, vérifier les trois adresses puis passer `showOtherProjects` à `true` dans `website/config.json`. La valeur reste actuellement `false`.
 
 Sur les deux autres sites, intégrer le même module et ses styles en l’adaptant à leur mise en page ; appeler `mountOtherProjects` avec `dunelegacy` ou `dinotale`. Le site courant est toujours exclu et seuls les deux autres sont affichés. Les deux dépôts existants n’ont pas été modifiés.
 

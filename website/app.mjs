@@ -1,17 +1,18 @@
-import { selectDownloads, formatSize } from './release-utils.mjs';
+import { selectDownloads, formatSize, WINDOWS_PACKAGE_KIND } from './release-utils.mjs';
 import { mountOtherProjects } from './other-projects.mjs';
 
-function showDownload(platform, asset) {
-  if (!asset) return;
-  const link = document.getElementById(`${platform}-download`);
+function showWindowsDownload(asset) {
+  if (!asset || asset.kind !== WINDOWS_PACKAGE_KIND) return;
+  const link = document.getElementById('windows-download');
   link.href = asset.browser_download_url;
   link.removeAttribute('aria-disabled');
-  link.querySelector('span').textContent = platform === 'windows' ? 'Télécharger pour Windows' : 'Télécharger pour Linux';
-  document.getElementById(`${platform}-badge`).textContent = asset.version;
-  document.getElementById(`${platform}-description`).textContent = platform === 'windows'
-    ? 'La version Windows est disponible. Retrouvez les instructions propres à cette version dans le téléchargement.'
-    : 'La version Linux est disponible. Consultez les instructions et les prérequis fournis avec ce paquet.';
-  document.getElementById(`${platform}-info`).textContent = `${asset.name} · ${formatSize(asset.size)}`;
+  link.querySelector('span').textContent = 'Télécharger le moteur + mod';
+  document.getElementById('windows-badge').textContent = 'Données requises';
+  document.getElementById('windows-description').textContent = 'Le moteur, ses dépendances et les règles du mod sont disponibles pour Windows x64. Ce paquet nécessite les données d’une extraction privée compatible de Fusiongus pour jouer.';
+  document.getElementById('windows-info').textContent = `${asset.version} · ${formatSize(asset.size)} · ${asset.name}`;
+  const checksum = document.getElementById('windows-checksum');
+  checksum.textContent = `SHA-256 : ${asset.sha256}`;
+  checksum.hidden = false;
 }
 
 async function loadDownloads() {
@@ -19,13 +20,12 @@ async function loadDownloads() {
     const response = await fetch('./downloads.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error('Téléchargements indisponibles');
     const payload = await response.json();
-    const downloads = selectDownloads(payload.releases);
-    showDownload('windows', downloads.windows);
-    showDownload('linux', downloads.linux);
-    if (downloads.windows) document.getElementById('hero-status').textContent = downloads.linux
-      ? 'Disponible sur Windows et Linux' : 'Disponible sur Windows · Linux à venir';
-    else if (downloads.linux) document.getElementById('hero-status').textContent = 'Disponible sur Linux · Windows en préparation';
-    if (downloads.windows || downloads.linux) document.getElementById('release-note').textContent = 'Téléchargements officiels du dépôt TornekoPanther/Fusiongus. Les instructions de chaque version sont incluses dans son paquet.';
+    const downloads = selectDownloads(payload.releases, payload.packages);
+    showWindowsDownload(downloads.windows);
+    if (downloads.windows) {
+      document.getElementById('hero-status').textContent = 'Windows : moteur + mod, données requises · Linux à venir';
+      document.getElementById('release-note').textContent = 'Paquet moteur + mod du dépôt TornekoPanther/Fusiongus. Les images, sons, vidéos, cartes et campagnes ne sont pas inclus. Consultez les prérequis avant le téléchargement.';
+    }
     return downloads;
   } catch {
     const note = document.getElementById('release-note');

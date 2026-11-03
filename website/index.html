@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101713">
-  <meta name="description" content="Fusiongus, un projet de Tornie. Retrouvez les téléchargements Windows, les prochaines versions et les instructions d’installation.">
+  <meta name="description" content="Fusiongus, un projet de Tornie. Paquet Windows moteur et mod : données d’une extraction Fusiongus compatible requises. Prérequis et installation.">
   <title>Fusiongus — Le jeu de Tornie</title>
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
@@ -26,9 +26,9 @@
       <div class="hero-copy">
         <p class="eyebrow"><span class="small-mark" aria-hidden="true">✳</span> UN PROJET DE TORNIE</p>
         <h1 id="hero-title">Bienvenue dans<br><span>Fusiongus.</span></h1>
-        <p class="intro">Le point de départ de votre prochaine partie.<br>Retrouvez le jeu, ses versions et tout ce qu’il faut pour le lancer.</p>
+        <p class="intro">Le projet Fusiongus, ses versions et ses instructions d’installation.<br>Le paquet public Windows réunit le moteur et le mod. Les données compatibles sont à importer séparément.</p>
         <a class="text-link" href="#telecharger">Choisir ma version <span aria-hidden="true">↓</span></a>
-        <div class="hero-foot"><span class="status-dot" aria-hidden="true"></span><span id="hero-status">Windows en préparation · Linux à venir</span></div>
+        <div class="hero-foot"><span class="status-dot" aria-hidden="true"></span><span id="hero-status">Moteur + mod Windows en préparation · Données requises</span></div>
       </div>
 
       <div class="fusion-art" role="img" aria-label="Illustration abstraite de deux formes qui se rejoignent, symbole de Fusiongus">
@@ -45,34 +45,39 @@
     </section>
 
     <section id="telecharger" class="downloads wrap" aria-labelledby="downloads-title">
-      <div class="section-heading"><div><p class="eyebrow">01 / TÉLÉCHARGEMENTS</p><h2 id="downloads-title">À vous de jouer.</h2></div><a class="text-link" href="https://github.com/TornekoPanther/Fusiongus/releases">Toutes les versions <span aria-hidden="true">↗</span></a></div>
+      <div class="section-heading"><div><p class="eyebrow">01 / TÉLÉCHARGEMENTS</p><h2 id="downloads-title">Le moteur et le mod.</h2></div><a class="text-link" href="https://github.com/TornekoPanther/Fusiongus/releases">Toutes les versions <span aria-hidden="true">↗</span></a></div>
       <div class="platforms">
         <article class="platform windows">
           <div class="platform-top"><svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true"><path fill="currentColor" d="M2 5l12-2v12H2zm14-2l14-2v14H16zM2 17h12v12L2 27zm14 0h14v14l-14-2z"/></svg><span class="pill" id="windows-badge">En préparation</span></div>
-          <h3>Windows</h3>
-          <p id="windows-description">Le téléchargement sera disponible dès la publication de la première version Windows.</p>
-          <a id="windows-download" class="download-button" aria-disabled="true" role="link"><span>Télécharger pour Windows</span><span aria-hidden="true">↓</span></a>
-          <p class="asset-info" id="windows-info" role="status" aria-live="polite">Aucune version Windows publiée pour le moment.</p>
+          <h3>Windows x64</h3>
+          <p id="windows-description">Le paquet moteur + mod sera proposé après validation. Il nécessite les données d’une extraction privée compatible de Fusiongus pour jouer.</p>
+          <p class="package-requirements">Images, sons, vidéos, cartes et campagnes ne sont pas inclus. Une installation Wargus standard ne suffit pas.</p>
+          <a class="package-guide" href="#installation">Vérifier les prérequis et l’import</a>
+          <a id="windows-download" class="download-button" aria-disabled="true" role="link" aria-describedby="windows-description"><span>Télécharger le moteur + mod</span><span aria-hidden="true">↓</span></a>
+          <p class="asset-info" id="windows-info" role="status" aria-live="polite">Aucun paquet public validé n’est proposé pour le moment.</p>
+          <p class="asset-info" id="windows-checksum" hidden></p>
         </article>
         <article class="platform linux">
           <div class="platform-top"><span class="linux-symbol" aria-hidden="true">&gt;_</span><span class="pill" id="linux-badge">La prochaine étape</span></div>
           <h3>Linux</h3>
           <p id="linux-description">Une version Linux est prévue après la préparation et la vérification de la version Windows.</p>
           <a id="linux-download" class="download-button secondary" aria-disabled="true" role="link"><span>Version Linux à venir</span><span aria-hidden="true">↗</span></a>
-          <p class="asset-info" id="linux-info" role="status" aria-live="polite">Le lien apparaîtra ici quand une version Linux sera publiée.</p>
+          <p class="asset-info" id="linux-info" role="status" aria-live="polite">Le lien apparaîtra après validation et activation de la version Linux.</p>
         </article>
       </div>
-      <p class="release-note" id="release-note">Les versions jouables seront proposées depuis les Releases du projet.</p>
+      <p class="release-note" id="release-note">Le téléchargement public contient le moteur et le mod, avec des données compatibles à importer séparément. Il sera proposé depuis les Releases après validation.</p>
       <noscript><p>JavaScript est désactivé. Consultez <a href="https://github.com/TornekoPanther/Fusiongus/releases">les Releases de Fusiongus</a> pour trouver les téléchargements disponibles.</p></noscript>
     </section>
 
     <section id="installation" class="installation wrap" aria-labelledby="install-title">
-      <div class="section-heading"><div><p class="eyebrow">02 / PREMIERS PAS</p><h2 id="install-title">Du téléchargement à la partie.</h2></div></div>
+      <div class="section-heading"><div><p class="eyebrow">02 / PRÉREQUIS ET INSTALLATION</p><h2 id="install-title">Préparez vos données Fusiongus.</h2></div></div>
+      <p class="installation-note">Ce paquet nécessite une extraction privée de <code>Fusiongus-portable-2026-11-01-campagnes.zip</code> contenant <code>PORTABLE-MANIFEST.json</code> et <code>prototype/data</code>. Une installation Wargus standard et l’import depuis d’autres mods ne sont pas pris en charge. Sans cette source compatible, le téléchargement seul ne permet pas de jouer.</p>
       <ol class="steps">
-        <li><span class="step-number">01</span><div><h3>Choisissez Windows</h3><p>Téléchargez le paquet Windows lorsqu’il est disponible. Le lien pointe vers les fichiers du jeu, pas vers l’archive du code source.</p></div></li>
-        <li><span class="step-number">02</span><div><h3>Préparez le dossier</h3><p>Pour une version ZIP, choisissez « Extraire tout » et conservez tous les fichiers ensemble. Pour un installateur, suivez ses étapes.</p></div></li>
-        <li><span class="step-number">03</span><div><h3>Suivez le guide du jeu</h3><p>Ouvrez les instructions fournies dans le téléchargement pour connaître le lanceur et les éventuels prérequis de cette version.</p></div></li>
+        <li><span class="step-number">01</span><div><h3>Extrayez dans un dossier neuf</h3><p>Choisissez « Extraire tout » pour le paquet moteur + mod. Conservez votre extraction privée compatible et vos sauvegardes dans leur dossier d’origine.</p></div></li>
+        <li><span class="step-number">02</span><div><h3>Importez vos données</h3><p>Lancez <code>Configurer Fusiongus.cmd</code>, puis sélectionnez le dossier <code>Fusiongus</code> de l’extraction privée compatible. L’import copie et vérifie environ 700 Mo de données dans <code>work-data</code>, sans reprendre les profils et sauvegardes d’origine.</p></div></li>
+        <li><span class="step-number">03</span><div><h3>Vérifiez, puis lancez</h3><p>Utilisez <code>Verifier les donnees.cmd</code> pour vérifier l’import, puis <code>Lancer Fusiongus.cmd</code> pour démarrer avec un profil neuf. Le guide inclus dans le ZIP détaille aussi la configuration en ligne de commande.</p></div></li>
       </ol>
+      <p class="installation-note">Pour partager le paquet public, utilisez uniquement le ZIP d’origine. Le dossier configuré contient vos données importées et ne doit pas être republié.</p>
     </section>
 
     <section id="other-projects" class="wrap" aria-label="Autres projets" hidden></section>
